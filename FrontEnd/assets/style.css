@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #fffef8;
 }
 ol, ul {
 	list-style: none;
@@ -93,6 +94,10 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+nav a {
+	text-decoration: none;
+	color: black;
 }
 
 li:hover {
@@ -160,11 +165,15 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
+
+.login-link {
+	font-weight: 600;
+}
+
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -179,7 +188,6 @@ margin: auto;
 	display: flex;
 	flex-direction: column;
 }
-
 #contact input {
 	height: 50px;
 	font-size: 1.2em;
@@ -193,7 +201,6 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-
 input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
@@ -205,9 +212,56 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+#contact a {
+	margin: auto;
+	color: black;
+}
+
 footer nav ul {
+	max-width: 1140px;
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em 0 2em 0;
 }
+
+.footer-login {
+	width: 1140px;
+	position: fixed;
+	bottom: 0;
+	margin: auto;
+	background-color: #ffffff;
+}
+/*Code de LOGIN.HTML */
+/*
+.ifError {
+	margin: auto;
+	padding-top: 3em;
+	font-family: "Syne";
+	font-size: 20px;
+	font-weight: 600;
+	color: red;
+	display: none;
+}
+
+.error {
+	display: block;
+}*/
+
+#contact .if-error {
+	margin: auto;
+	padding-top: 3em;
+	font-family: "Syne";
+	font-size: 20px;
+	font-weight: 600;
+	color: red;
+	display: none;
+}
+#contact .error {
+	display: block;
+}
+
+
+
+
+
 

@@ -90,7 +90,7 @@ function filtresNom (category) {
         button.addEventListener("click", () => {
 
             buttons.forEach((button) => {
-                button.classList.remove("selected");
+                button.classList.remove("selected"); // enleve la couleur verte au bouton
             });
 
                 const nomDuFiltre = button.innerText;
@@ -110,7 +110,7 @@ function filtresNom (category) {
                     }
                 });
 
-            button.classList.add("selected");
+            button.classList.add("selected"); // rajoute la couleur verte au bouton
       });
     });
   }
