@@ -26,7 +26,7 @@ loginForm.addEventListener("submit", async (event) => {
         const response = await login(authentification)
 
         if (response.token){
-        localStorage.setItem("token", response.token)
+        sessionStorage.setItem("token", response.token)
         retourAccueil()
         } else{
             ifError.classList.add("error")

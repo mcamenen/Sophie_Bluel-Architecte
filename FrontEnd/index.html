@@ -9,16 +9,69 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="https://kit.fontawesome.com/a0505bb2b1.js" crossorigin="anonymous"></script>
 	<script src="./assets/js/script.js" defer></script>
 </head>
+
+
 <body>
+
+	<div id="modal1" style="display:none;">
+		<section class="modal-window">
+			<div class="close"><i class="fa-solid fa-xmark fa-xl"></i></div>
+			<h3>Galerie photo</h3>
+			<div class="mini-gallery"></div>
+			<button class="open-modal2">Ajouter une photo</button>
+		</section>
+	</div>
+
+	<div id="modal2" style="display:none;">
+		<section class="modal-window">
+			<div class="close2">
+				<i class="fa-solid fa-arrow-left fa-xl"></i>
+				<i class="fa-solid fa-xmark fa-xl"></i>
+			</div>
+			<h3>Ajout photo</h3>
+			<div class="add-photo">
+				<div class="choice-photo">
+					<i class="fa-sharp fa-regular fa-image"></i>
+					<form>
+						<label for="file-upload" class="upload">+ Ajouter photo</label>
+						<input type="file" id="upload" name="image" accept="image/" style="display:none;" required>
+					</form>
+					<p>pnj, png : 4mo max</p>
+				</div>
+				<form class="test">
+					<label for="titre">Titre</label>
+					<input type="text" name="titre" id="titre">
+					<label for="categorie">Catégorie</label>
+					<select id="categorie" name="categorie">
+						<option value="option1">Option 1</option>
+						<option value="option2">Option 2</option>
+						<option value="option3">Option 3</option>
+					</select>
+
+				</form>
+			</div>
+			<button>Valider</button>
+		</section>
+	</div>
+
+
+	<div class="mode-edition" style="display:none;">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<a href="#" >Mode édition</a>
+	</div>
+
+<div class="main-container">	
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="login.html">login</a></li>
+			<li id="loginbtn"><a href="login.html" >login</a></li>
+			<li id="logoutbtn" style="display:none;"><a href="index.html">logout</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -36,7 +89,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
+		<div class="projets">
 		<h2>Mes Projets</h2>
+		<div class="open-modal" style="display:none;">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<a href="#" >modifier</a>
+		</div>
+		</div>
 		<div class="filter"></div>
 		<div class="gallery">
 		</div>
@@ -55,7 +114,7 @@
 		</form>
 	</section>
 </main>
-
+</div>
 <footer>
 	<nav>
 		<ul>

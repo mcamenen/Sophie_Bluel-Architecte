@@ -49,11 +49,34 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin:auto;
+	max-width: 1440px;
+	margin: auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
+
+.main-container {
+	width: 1140px;
+}
+
+.mode-edition {
+	width: 100%;
+	height: 59px;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.mode-edition a, .mode-edition i {
+	color: #ffffff;
+	text-decoration: none;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -126,9 +149,29 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+.projets {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	position: relative;
+	z-index: 0;
+}
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+}
+
+.open-modal {
+	padding: 10px;
+	position: absolute;
+	right: 315px;
+}
+
+.open-modal a {
+	text-decoration: none;
+	color: black;
 }
 
 .filter {
@@ -217,35 +260,26 @@ input[type="submit"]{
 	color: black;
 }
 
+footer {
+	width: 100%;
+	height: 60px;
+	background-color: #ffffff;
+	position: relative;
+}
+
 footer nav ul {
-	max-width: 1140px;
-	display: flex;
-	justify-content: flex-end;
-	margin: 2em 0 2em 0;
+	position: absolute;
+	top: 22px;
+	right: 107px;
 }
 
 .footer-login {
-	width: 1140px;
+	max-width: 1440px;
+	height: 60px;
 	position: fixed;
 	bottom: 0;
-	margin: auto;
 	background-color: #ffffff;
 }
-/*Code de LOGIN.HTML */
-/*
-.ifError {
-	margin: auto;
-	padding-top: 3em;
-	font-family: "Syne";
-	font-size: 20px;
-	font-weight: 600;
-	color: red;
-	display: none;
-}
-
-.error {
-	display: block;
-}*/
 
 #contact .if-error {
 	margin: auto;
@@ -259,6 +293,178 @@ footer nav ul {
 #contact .error {
 	display: block;
 }
+
+/** MODALS **/
+
+
+.open-modal {
+	gap: 10px;
+}
+
+#modal1, #modal2 {
+	position: fixed;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-window {
+	width: 630px;
+	height: 688px;
+	border-radius: 10px;
+	background-color: #fffef8;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.close {
+	width: 100%;
+	height: 60px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.close2 {
+	width: 100%;
+	height: 60px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.close i, .close2 i {
+	padding-right: 30px;
+	padding-left: 30px;
+}
+
+.modal-window h3 {
+	width: 100%;
+	height: 30px;
+	font-family: 'Work Sans' ;
+	font-size: 26px;
+	font-weight: 400;
+	text-align: center;
+}
+
+.mini-gallery {
+	
+	width: 420px;
+	margin-left: 105px;
+	margin-right: 105px;
+	border-bottom: solid #b3b3b3 1px ;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	padding-bottom: 30px;
+	padding-top: 30px;
+}
+
+.modal-window button {
+	width: 237px;
+	margin-top: 38px;
+	margin-bottom: 38px;
+	height: 36px;
+	color: white;
+	background-color: #1D6154;
+	border-radius: 60px;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 14px;
+}
+
+.card {
+	width: 84px;
+	height: 128.78px;
+	position: relative;
+}
+
+.card img {
+	width: 76px;
+	height: 102.57px;
+	padding: 4px;
+}
+
+.fa-trash-can {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 17px;
+	height: 9px;
+	padding-top: 8px;
+	color: #ffffff;
+	background-color: #000000;
+	text-align: center;
+	border-radius: 2px;
+}
+
+.add-photo {
+	width: 420px;
+	margin-left: 105px;
+	margin-right: 105px;
+	border-bottom: solid #b3b3b3 1px ;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 30px;
+	padding-top: 30px;
+}
+
+.choice-photo {
+	width: 420px;
+	height: 169px;
+	border-radius: 3px;
+	background-color: rgba(232, 241, 246);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.fa-image {
+	font-size: 68.14px;
+	color: rgba(185, 197, 204, 1);
+
+}
+
+.upload {
+	width: 173px;
+	height: 36px;
+	border-radius: 50px;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	font-weight: 500;
+	color: rgba(48, 102, 133, 1);
+	background-color: rgba(185, 197, 204, 1);
+}
+
+.choice-photo p {
+	font-family: 'Work Sans';
+	font-size: 10px;
+	font-weight: 400;
+	color: rgba(68, 68, 68, 1);
+}
+
+.test {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.test input, .test select {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+.test label {
+	margin: 25px 0 10px 0;
+}
+
 
 
 
