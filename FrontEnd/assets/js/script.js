@@ -3,13 +3,14 @@
 // Appel de API/WORKS + Remplacement des balises
 
 async function remplacementBalises () {
-
+    
     const response = await fetch("http://localhost:5678/api/works")
         
     const works = await response.json()
-           
+          
     creationBalises (works);
-    creationMiniGallery (works)
+    creationMiniGallery (works);
+    addProject (works)
 }     
 
 
@@ -54,6 +55,7 @@ async function creationFiltres () {
             
     filtresNom (category)
     filtrage(category);
+    choixCategoryModal (category)
             
 }   
 
@@ -206,24 +208,21 @@ function creationMiniGallery(works) {
     
             .then(response => {
               if (response.ok) {
+
+                console.log("projet supprimé")
                 
                 const removeCard = document.getElementById(`${idImage}`).closest('.card');
                 removeCard.remove();
                 const removeFigure = document.getElementById(`${idImage}`).closest("figure");
                 removeFigure.remove();
                 
-              } else {
-                console.error('Erreur de suppression du projet');
-              }
+              } 
             })
-
-            .catch(error => {
-              console.error('Erreur de connexion');
-            });
 
       });
     }
 }
+
 
 // OUVERTURE DE LA MODAL 2
 
@@ -236,6 +235,7 @@ openModal2.addEventListener('click', function() {
 
 });
 
+
 // RETOUR A LA MODAL 1
 
 const returnModal2 = document.querySelector(".fa-arrow-left")
@@ -246,6 +246,7 @@ returnModal2.addEventListener('click', function() {
     document.getElementById("modal2").style.display = "none";
 
 });
+
 
 // FERMETURE DE LA MODAL 2
 
@@ -263,4 +264,162 @@ if (event.target === modal2) { modal2.style.display = "none"; };
 
 });
 
+
+// TELECHARGEMENT DE L'IMAGE DANS LA MODAL 2
+
+const icon = document.querySelector(".fa-image");
+const form = document.querySelector(".add-info");
+const buttonAddPhoto = document.querySelector(".upload");
+const paragraph = document.getElementById("format");
+const img = document.getElementById("insight");
+
+
+form.addEventListener("change", function (event) {
+  event.preventDefault();
+
+  const file = document.getElementById("upload").files[0];
+
+  if (file) {
+    // Créez un objet FileReader pour lire le contenu du fichier et l'insérer dans une balise img
+    const reader = new FileReader();
+
+    // Chargement du fichier
+    reader.onload = function (event) {
+      img.src = event.target.result;
+      img.style.display = "flex";
+
+      icon.style.display = "none";
+      buttonAddPhoto.style.display = "none";
+      paragraph.style.display = "none";
+    };
+
+    // Lecture du fichier 
+    reader.readAsDataURL(file);
+  }
+});
+
+
 // AJOUT DES CATEGORIES DANS LA MODAL 2
+
+function choixCategoryModal (category) {
+
+    for (let i = 0; i < category.length; i++) {
+
+        const option = document.createElement("option");
+        const select = document.getElementById("categorie");
+        option.innerText = category[i].name;
+        option.setAttribute("value", category[i].id)
+        select.appendChild(option);
+    }
+}
+
+
+// CREATION ET ENVOI DU NOUVEAU PROJET
+
+function addProject (works) {
+
+    let i = works.length-1
+    let id = works[i].id
+    console.log(id)
+
+const validation = document.querySelector(".valid")
+let token = sessionStorage.getItem("token")
+
+validation.addEventListener("click", function(event) {
+    event.preventDefault();
+  
+    // récupération des valeurs du formulaire
+    const file = document.getElementById("upload").files[0];
+    console.log(file)
+    const title = document.getElementById("titre").value;
+    console.log(title)
+    const category = document.getElementById("categorie").value;
+    console.log(category)
+  
+    // Validation des données du formulaire
+    if ( !file || !title || !category ) {
+        console.error("Veuillez remplir tous les champs du formulaire");
+        return;
+        
+    }
+
+    let formData = new FormData();
+
+        formData.append("image", file);
+        formData.append("title", title);
+        formData.append("category", category);
+        console.log(formData)
+        
+
+        fetch("http://localhost:5678/api/works/", {
+
+            method: 'POST',
+            headers: {
+                Authorization : 'Bearer ' + token, 
+                Accept : "application/json",
+            },
+            body: formData,
+        })
+
+        .then((response) => {
+            if (response.status) {
+                    console.log("Nouveau projet inséré à la gallerie");
+                    document.getElementById("modal2").style.display = "none";
+                    document.querySelector(".add-info").reset();
+
+                    const icon = document.querySelector(".fa-image");
+                    icon.style.display = "flex";
+                    const buttonAddPhoto = document.querySelector(".upload");
+                    buttonAddPhoto.style.display = "flex";
+                    const paragraph = document.getElementById("format");
+                    paragraph.style.display = "flex";
+                    const img = document.getElementById("insight");
+                    img.src = "";
+                    img.style.display = "none";
+
+                    fetch("http://localhost:5678/api/works")
+                        .then((response) => response.json())
+                        .then((works) => {
+                        // Ajoutez le nouveau projet aux galeries
+
+
+                        const gallery = document.querySelector(".gallery");
+                        const figure = document.createElement("figure");
+                        const image = document.createElement("img");
+                        const figcaption = document.createElement("figcaption");
+                        
+                        figure.id = works[i].id;
+                        figure.dataset.category = works[i].category.name; // Ajouter l'attribut data-category
+                
+                        gallery.appendChild(figure);
+                        figure.appendChild(image);
+                        figure.appendChild(figcaption);
+                    
+                        image.src = works[i].imageUrl;
+                        figcaption.innerText = works[i].title;
+
+
+                        const miniGallery = document.querySelector(".mini-gallery");
+                        const card = document.createElement("div");
+                        const image2 = document.createElement("img");
+                        const trash = document.createElement("i");
+                            
+                        card.classList.add("card");
+                        trash.classList.add("fa-solid", "fa-trash-can", "fa-xs");
+                        card.id = works[i].id;
+                        card.dataset.category = works[i].category.name; // Ajouter l'attribut data-category
+
+                        miniGallery.appendChild(card);
+                        card.appendChild(image2);
+                        card.appendChild(trash);
+                    
+                        image2.src = works[i].imageUrl;
+
+                        });
+            }
+            
+        })
+
+    })
+
+}

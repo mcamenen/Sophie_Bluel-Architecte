@@ -319,6 +319,7 @@ footer nav ul {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin: 0;
 }
 
 .close {
@@ -356,12 +357,19 @@ footer nav ul {
 	width: 420px;
 	margin-left: 105px;
 	margin-right: 105px;
-	border-bottom: solid #b3b3b3 1px ;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	padding-bottom: 30px;
 	padding-top: 30px;
+}
+
+hr {
+	width: 420px;
+	color: #b3b3b3;
+	background-color: #b3b3b3;
+	height: 1px;
+	border: solid #b3b3b3 1px;
 }
 
 .modal-window button {
@@ -406,12 +414,10 @@ footer nav ul {
 	width: 420px;
 	margin-left: 105px;
 	margin-right: 105px;
-	border-bottom: solid #b3b3b3 1px ;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	padding-bottom: 30px;
 	padding-top: 30px;
 }
 
@@ -441,29 +447,64 @@ footer nav ul {
 	font-weight: 500;
 	color: rgba(48, 102, 133, 1);
 	background-color: rgba(185, 197, 204, 1);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
+
 
 .choice-photo p {
 	font-family: 'Work Sans';
 	font-size: 10px;
 	font-weight: 400;
+	height: 12px;
 	color: rgba(68, 68, 68, 1);
 }
 
-.test {
+.add-info {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 }
-.test input, .test select {
+.add-info #titre, .add-info #categorie {
 	height: 50px;
-	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-.test label {
+.title-category {
 	margin: 25px 0 10px 0;
 }
+
+.add-info select {
+	margin-bottom: 30px;
+}
+
+#insight {
+	width: 129px;
+	height: 169px;
+}
+
+.modal-window .valid {
+	width: 237px;
+	margin-top: 38px;
+	margin-bottom: 38px;
+	height: 36px;
+	color: white;
+	background-color: rgba(167, 167, 167, 1);
+	border-radius: 60px;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 14px;
+}
+
+.modal-window .valid:hover {
+	background-color: #1D6154;
+}
+
+button, input {
+	border: 0px;
+}
+
 
 
 
