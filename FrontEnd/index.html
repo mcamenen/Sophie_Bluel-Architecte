@@ -16,7 +16,7 @@
 
 <body>
 
-	<div id="modal1" style="display:none;">
+	<div id="modal1">
 		<section class="modal-window">
 			<div class="close"><i class="fa-solid fa-xmark fa-xl"></i></div>
 			<h3>Galerie photo</h3>
@@ -26,7 +26,7 @@
 		</section>
 	</div>
 
-	<div id="modal2" style="display:none;">
+	<div id="modal2">
 		<section class="modal-window">
 			<div class="close2">
 				<i class="fa-solid fa-arrow-left fa-xl"></i>
@@ -39,9 +39,9 @@
 					<div class="choice-photo">
 						<i class="fa-sharp fa-regular fa-image"></i>
 						<label for="upload" class="upload">+ Ajouter photo</label>
-						<input type="file" id="upload" name="image" accept="image/png, image/jpg" style="display:none;" required>
-						<p id="format">pnj, png : 4mo max</p>
-						<img src="#" id="insight" alt="image" style="display: none;">
+						<input type="file" id="upload" name="image" accept="image/jpg, image/png" required>
+						<p id="format">jpg, png : 4mo max</p>
+						<img src="#" id="insight" alt="image">
 					</div>
 				
 					<label for="titre" class="title-category">Titre</label>
@@ -52,12 +52,14 @@
 					<hr>
 					<input type="submit" value="Valider" class="valid">
 				</form>
+				
 			</div>
+			<p class="if-error">Veuillez remplir tous les champs du formulaire</p>
 		</section>
 	</div>
 
 
-	<div class="mode-edition" style="display:none;">
+	<div class="mode-edition">
 		<i class="fa-regular fa-pen-to-square"></i>
 		<a href="#" >Mode édition</a>
 	</div>
@@ -70,7 +72,7 @@
 			<li>projets</li>
 			<li>contact</li>
 			<li id="loginbtn"><a href="login.html" >login</a></li>
-			<li id="logoutbtn" style="display:none;"><a href="index.html">logout</a></li>
+			<li id="logoutbtn"><a href="index.html">logout</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -90,7 +92,7 @@
 	<section id="portfolio">
 		<div class="projets">
 		<h2>Mes Projets</h2>
-		<div class="open-modal" style="display:none;">
+		<div class="open-modal">
 		<i class="fa-regular fa-pen-to-square"></i>
 		<a href="#" >modifier</a>
 		</div>

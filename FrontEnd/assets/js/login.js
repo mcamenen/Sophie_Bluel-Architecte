@@ -26,10 +26,11 @@ loginForm.addEventListener("submit", async (event) => {
         const response = await login(authentification)
 
         if (response.token){
-        sessionStorage.setItem("token", response.token)
+        sessionStorage.setItem("token", response.token) // Stockage du token
         retourAccueil()
         } else{
-            ifError.classList.add("error")
+            const ifError = document.querySelector(".if-error");
+            ifError.style.display = "flex"; // Affichage du message d'erreur
         }
     }
 
@@ -37,12 +38,12 @@ loginForm.addEventListener("submit", async (event) => {
 
 // Envoie des infos vers l'API et retour de la reponse
 
-const login = async (authentification) => {
+async function login (authentification) {
 
     const response = await fetch('http://localhost:5678/api/users/login', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify( authentification )
+        body: JSON.stringify( authentification ) 
     })
 
   return response.json()

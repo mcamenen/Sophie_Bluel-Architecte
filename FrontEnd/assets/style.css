@@ -70,6 +70,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	gap: 10px;
+	display: none;
 }
 
 .mode-edition a, .mode-edition i {
@@ -117,6 +118,10 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+
+#logoutbtn {
+	display: none;
 }
 nav a {
 	text-decoration: none;
@@ -167,6 +172,7 @@ li:hover {
 	padding: 10px;
 	position: absolute;
 	right: 315px;
+	display: none;
 }
 
 .open-modal a {
@@ -255,6 +261,10 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+#loginForm a {
+	padding-bottom: 30px;
+}
+
 #contact a {
 	margin: auto;
 	color: black;
@@ -281,18 +291,17 @@ footer nav ul {
 	background-color: #ffffff;
 }
 
-#contact .if-error {
-	margin: auto;
-	padding-top: 3em;
+.if-error {
+	margin: 0px;
 	font-family: "Syne";
 	font-size: 20px;
 	font-weight: 600;
 	color: red;
 	display: none;
+	justify-content: center;
+	padding-bottom: 20px;
 }
-#contact .error {
-	display: block;
-}
+
 
 /** MODALS **/
 
@@ -306,14 +315,14 @@ footer nav ul {
 	z-index: 1;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0,0,0,0.4);
+	background-color: rgba(0,0,0,0.3);
 	justify-content: center;
 	align-items: center;
+	display: none;
 }
 
 .modal-window {
 	width: 630px;
-	height: 688px;
 	border-radius: 10px;
 	background-color: #fffef8;
 	display: flex;
@@ -452,6 +461,10 @@ hr {
 	align-items: center;
 }
 
+#upload {
+	display: none;
+}
+
 
 .choice-photo p {
 	font-family: 'Work Sans';
@@ -482,12 +495,11 @@ hr {
 #insight {
 	width: 129px;
 	height: 169px;
+	display: none;
 }
 
 .modal-window .valid {
 	width: 237px;
-	margin-top: 38px;
-	margin-bottom: 38px;
 	height: 36px;
 	color: white;
 	background-color: rgba(167, 167, 167, 1);
