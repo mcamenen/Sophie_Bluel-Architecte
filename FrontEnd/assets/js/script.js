@@ -7,21 +7,32 @@ async function remplacementBalises () {
     const response = await fetch("http://localhost:5678/api/works")
         
     const works = await response.json()
+
+    sessionStorage.setItem("worksData", JSON.stringify(works)); // stockage des données dans le sessionStorage
+
+    // mise à jour de l'ID dans le sessionStorage
+    let longueur = works.length 
+    let nb = works[longueur-1].id
+    let idProjetAjoute = nb
+    if (nb<=11) {
+        idProjetAjoute = nb + 3
+        console.log(idProjetAjoute)
+    }else{
+        idProjetAjoute = nb + 1
+        console.log(idProjetAjoute)
+    }
        
     creationBalises (works); // Galerie page d'acceuil
     creationMiniGallery (works); // Galerie modale 1 
-    addProject (works) ; // Ajour d'un projet modale 2
+    addProject (works, idProjetAjoute) ; // Ajour d'un projet modale 2
 }     
-
 
 remplacementBalises ()
 
 
 // Création des images et du texte à ajouter dans le html
 
-
 function creationBalises(works) {
-
 
     for (let i = 0; i < works.length; i++) {
 
@@ -47,7 +58,6 @@ function creationBalises(works) {
 
 // Appel de API/CATEGORY + Creation des balises filtres
 
-
 async function creationFiltres () {
 
     const response = await fetch("http://localhost:5678/api/categories")
@@ -56,7 +66,7 @@ async function creationFiltres () {
             
     filtresNom (category); // Création des filtres et de leurs noms associés
     filtrage(category); // Filtrage des images
-    choixCategoryModal (category);
+    choixCategoryModal (category); // Mise en place des catégories dans la modal2
             
 }   
 
@@ -95,13 +105,11 @@ buttons.forEach((button) => {
     button.addEventListener("click", () => {
 
         buttons.forEach((button) => {
-            button.classList.remove("selected"); // Supprime la couleur verte au bouton
+            button.classList.remove("selected"); // Supprime la couleur verte pour tous les boutons
         });
-
-            const nomDuFiltre = button.innerText;
-    
+            
             // Afficher ou masquer les éléments <figure> en fonction de la catégorie sélectionnée
-
+            const nomDuFiltre = button.innerText;
             const figures = document.querySelectorAll(".gallery figure");
 
             figures.forEach((figure) => {
@@ -200,7 +208,6 @@ function creationMiniGallery(works) {
         let token = sessionStorage.getItem("token")
         const idImage = works[i].id;
     
-    
             await fetch('http://localhost:5678/api/works' + '/' + idImage, {
     
             method: 'DELETE',
@@ -209,18 +216,27 @@ function creationMiniGallery(works) {
             })
     
             .then(response => {
-              if (response.ok) {
 
-                console.log("projet supprimé")
-                
-                const removeCard = document.getElementById(`${idImage}`);
-                removeCard.remove();
-                const removeFigure = document.getElementById(`${idImage}`);
-                removeFigure.remove();
-                
+                if (response.ok) {
+
+                    console.log("projet supprimé")
+                    
+                    const removeCard = document.getElementById(`${idImage}`);
+                    removeCard.remove();
+                    const removeFigure = document.getElementById(`${idImage}`);
+                    removeFigure.remove();
+
+                    console.log(idImage)
+                    // Récupere les données du `sessionStorage`
+                    const worksData = JSON.parse(sessionStorage.getItem("worksData"));
+                    // Trouve l'index de l'élément à supprimer dans le tableau worksData
+                    const index = worksData.findIndex(work => work.id === idImage);
+                    // Supprime l'élément du tableau worksData
+                    worksData.splice(index, 1);
+                    // Met à jour le `sessionStorage` avec les données mises à jour
+                    sessionStorage.setItem("worksData", JSON.stringify(worksData));
               } 
             })
-
       });
     }
 }
@@ -326,15 +342,17 @@ function choixCategoryModal (category) {
 
 // CREATION ET ENVOI DU NOUVEAU PROJET
 
-function addProject (works) {
+function addProject (works, idProjetAjoute) {
 
-    let i = works.length
+    console.log(idProjetAjoute)
 
 const validation = document.querySelector(".valid")
 let token = sessionStorage.getItem("token")
 
 validation.addEventListener("click", async function(event) {
     event.preventDefault();
+
+    const works = JSON.parse(sessionStorage.getItem("worksData"));
   
     // récupération des valeurs du formulaire
     const file = document.getElementById("upload").files[0];
@@ -349,8 +367,7 @@ validation.addEventListener("click", async function(event) {
         const ifError = document.querySelector(".if-error");
         ifError.style.display = "flex";
         
-        return;
-        
+        return; 
     }
 
     let formData = new FormData();
@@ -372,42 +389,40 @@ validation.addEventListener("click", async function(event) {
         })
 
         .then((response) => {
-            if (response.status) {
+            if (response.status) { // Si le statut de la reponse est OK
                     console.log("Nouveau projet inséré à la gallerie");
                     document.getElementById("modal2").style.display = "none";
+                    
                     const ifError = document.querySelector(".if-error");
                     ifError.style.display = "none";
+                    
                     document.querySelector(".add-info").reset();
-
+                    
                     const icon = document.querySelector(".fa-image");
                     icon.style.display = "flex";
-
                     const buttonAddPhoto = document.querySelector(".upload");
                     buttonAddPhoto.style.display = "flex";
                     const paragraph = document.getElementById("format");
                     paragraph.style.display = "flex";
                     const img = document.getElementById("insight");
                     img.src = "";
-                    img.style.display = "none";
+                    img.style.display = "none"; 
 
-                    fetch("http://localhost:5678/api/works")
-                        .then((response) => response.json())
-                        .then((newWorks) => {
-                        // Ajoutez le nouveau projet aux galeries
+                    // Ajout du nouveau projet dans le sessionStorage
+                    const updatedWorks = [...works, { id: idProjetAjoute, imageUrl: '../FrontEnd/assets/images/' + file.name, title: title, category: { name: category } }];
+                    idProjetAjoute = idProjetAjoute + 1
+                    sessionStorage.setItem("worksData", JSON.stringify(updatedWorks));
 
-                        const gallery = document.querySelector(".gallery");
-                        gallery.innerHTML = "";
-                        creationBalises(newWorks);
+                    // mise à jour du portfolio
+                    const gallery = document.querySelector(".gallery");
+                    gallery.innerHTML = "";
+                    creationBalises(updatedWorks);
 
-                        const miniGallery = document.querySelector(".mini-gallery");
-                        miniGallery.innerHTML = "";
-                        creationMiniGallery(newWorks);
-
-                        });
+                    // Mise à jour de la mini-gallery de la modal1
+                    const miniGallery = document.querySelector(".mini-gallery");
+                    miniGallery.innerHTML = "";
+                    creationMiniGallery(updatedWorks);          
             }
-            
         })
-
     })
-
 }
