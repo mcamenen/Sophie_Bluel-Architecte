@@ -8,23 +8,11 @@ async function remplacementBalises () {
         
     const works = await response.json()
 
-    sessionStorage.setItem("worksData", JSON.stringify(works)); // stockage des données dans le sessionStorage
-
-    // mise à jour de l'ID dans le sessionStorage
-    let longueur = works.length 
-    let nb = works[longueur-1].id
-    let idProjetAjoute = nb
-    if (nb<=11) {
-        idProjetAjoute = nb + 3
-        console.log(idProjetAjoute)
-    }else{
-        idProjetAjoute = nb + 1
-        console.log(idProjetAjoute)
-    }
+    sessionStorage.setItem("worksData", JSON.stringify(works)); // stockage des données dans le sessionStorage  
        
     creationBalises (works); // Galerie page d'acceuil
     creationMiniGallery (works); // Galerie modale 1 
-    addProject (works, idProjetAjoute) ; // Ajour d'un projet modale 2
+    addProject (works) ; // Ajour d'un projet modale 2
 }     
 
 remplacementBalises ()
@@ -42,7 +30,7 @@ function creationBalises(works) {
         const figcaption = document.createElement("figcaption");
         
         figure.id = works[i].id; // Ajout de l'ID
-        figure.dataset.category = works[i].category.name; // Ajout de l'attribut data-category
+        figure.dataset.category = works[i].categoryId; // Ajout de l'attribut data-category
 
         gallery.appendChild(figure);
         figure.appendChild(image);
@@ -96,7 +84,7 @@ function filtresNom (category) {
 
 // Ajout de gestionnaires d'événements de clic aux boutons de filtre
 
-function filtrage() {
+function filtrage(category) {
 
 const buttons = document.querySelectorAll(".button");
 
@@ -114,9 +102,9 @@ buttons.forEach((button) => {
 
             figures.forEach((figure) => {
 
-                const category = figure.dataset.category;
+                const catFigure = category[figure.dataset.category-1].name;
         
-                if (nomDuFiltre === "Tous" || nomDuFiltre === category ) {
+                if (nomDuFiltre === "Tous" || nomDuFiltre === catFigure ) {
                     figure.style.display = "block";
                 } else {
                     figure.style.display = "none";
@@ -193,7 +181,7 @@ function creationMiniGallery(works) {
       card.classList.add("card");
       trash.classList.add("fa-solid", "fa-trash-can", "fa-xs");
       card.id = works[i].id;
-      card.dataset.category = works[i].category.name; // Ajouter l'attribut data-category
+      card.dataset.category = works[i].categoryId; // Ajouter l'attribut data-category
 
       miniGallery.appendChild(card);
       card.appendChild(image);
@@ -342,9 +330,7 @@ function choixCategoryModal (category) {
 
 // CREATION ET ENVOI DU NOUVEAU PROJET
 
-function addProject (works, idProjetAjoute) {
-
-    console.log(idProjetAjoute)
+function addProject (works) {
 
 const validation = document.querySelector(".valid")
 let token = sessionStorage.getItem("token")
@@ -352,7 +338,7 @@ let token = sessionStorage.getItem("token")
 validation.addEventListener("click", async function(event) {
     event.preventDefault();
 
-    const works = JSON.parse(sessionStorage.getItem("worksData"));
+    const data = JSON.parse(sessionStorage.getItem("worksData"));
   
     // récupération des valeurs du formulaire
     const file = document.getElementById("upload").files[0];
@@ -388,8 +374,12 @@ validation.addEventListener("click", async function(event) {
             body: formData,
         })
 
-        .then((response) => {
+        .then( async(response) => {
             if (response.status) { // Si le statut de la reponse est OK
+
+                    const projetAjoute = await response.json(); // Convertit le corps de la réponse en JSON
+                    console.log(projetAjoute);
+
                     console.log("Nouveau projet inséré à la gallerie");
                     document.getElementById("modal2").style.display = "none";
                     
@@ -409,19 +399,18 @@ validation.addEventListener("click", async function(event) {
                     img.style.display = "none"; 
 
                     // Ajout du nouveau projet dans le sessionStorage
-                    const updatedWorks = [...works, { id: idProjetAjoute, imageUrl: '../FrontEnd/assets/images/' + file.name, title: title, category: { name: category } }];
-                    idProjetAjoute = idProjetAjoute + 1
-                    sessionStorage.setItem("worksData", JSON.stringify(updatedWorks));
+                    works = [...data, projetAjoute];
+                    sessionStorage.setItem("worksData", JSON.stringify(works));
 
                     // mise à jour du portfolio
                     const gallery = document.querySelector(".gallery");
                     gallery.innerHTML = "";
-                    creationBalises(updatedWorks);
+                    creationBalises(works);
 
                     // Mise à jour de la mini-gallery de la modal1
                     const miniGallery = document.querySelector(".mini-gallery");
                     miniGallery.innerHTML = "";
-                    creationMiniGallery(updatedWorks);          
+                    creationMiniGallery(works);          
             }
         })
     })
